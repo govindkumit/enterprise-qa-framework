@@ -7,9 +7,7 @@ from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 
-@pytest.mark.ui
-@pytest.mark.smoke
-@pytest.mark.regression
+
 def test_complete_purchase(driver):
 
     # Login
