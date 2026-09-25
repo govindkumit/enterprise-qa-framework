@@ -32,15 +32,19 @@ jobs:
 
       - name: Run API tests
         run: |
-          pytest api/tests -v
+          python -m pytest api/tests -v
+
+      - name: Run UI tests
+        run: |
+          python -m pytest tests/ui -v
 
       - name: Run DB tests
         run: |
-          pytest tests/db -v
+          python -m pytest tests/db -v
 
       - name: Run security tests
         run: |
-          pytest tests/security -v
+          python -m pytest tests/security -v
 
       - name: Run smoke tests
         run: |
