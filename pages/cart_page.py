@@ -5,26 +5,20 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class CartPage:
 
+    CHECKOUT = (By.ID, "checkout")
+
     def __init__(self, driver):
         self.driver = driver
-
-        self.checkout_button = (
-            By.ID,
-            "checkout"
-        )
+        self.wait = WebDriverWait(driver, 10)
 
     def checkout(self):
 
-        wait = WebDriverWait(self.driver, 10)
+        self.wait.until(
+            EC.url_contains("/cart.html")
+        )
 
-        checkout_button = wait.until(
-            EC.element_to_be_clickable(
-                self.checkout_button
-            )
+        checkout_button = self.wait.until(
+            EC.element_to_be_clickable(self.CHECKOUT)
         )
 
         checkout_button.click()
-
-        wait.until(
-            EC.url_contains("checkout-step-one.html")
-        )

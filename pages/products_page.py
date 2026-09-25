@@ -1,56 +1,33 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ProductsPage:
 
+    CART = (By.ID, "shopping_cart_container")
+    BACKPACK = (By.ID, "add-to-cart-sauce-labs-backpack")
+
     def __init__(self, driver):
         self.driver = driver
-
-        self.backpack = (
-            By.ID,
-            "add-to-cart-sauce-labs-backpack"
-        )
-
-        self.cart = (
-            By.CLASS_NAME,
-            "shopping_cart_link"
-        )
+        self.wait = WebDriverWait(driver, 10)
 
     def add_backpack_to_cart(self):
 
-        print("Current URL:", self.driver.current_url)
-        print("Page title:", self.driver.title)
-
-        print(
-            "Backpack elements found:",
-            len(
-                self.driver.find_elements(
-                    By.ID,
-                    "add-to-cart-sauce-labs-backpack"
-                )
-            )
+        button = self.wait.until(
+            EC.element_to_be_clickable(self.BACKPACK)
         )
 
-        buttons = self.driver.find_elements(
-            By.CSS_SELECTOR,
-            "button"
-        )
-
-        print("Add buttons found:", len(buttons))
-
-        for button in buttons:
-            print(
-                "BUTTON:",
-                button.text,
-                "| ID:",
-                button.get_attribute("id")
-            )
-
-        self.driver.find_element(
-            *self.backpack
-        ).click()
+        button.click()
 
     def open_cart(self):
-        self.driver.find_element(
-            *self.cart
-        ).click()
+
+        cart = self.wait.until(
+            EC.element_to_be_clickable(self.CART)
+        )
+
+        cart.click()
+
+        self.wait.until(
+            EC.url_contains("/cart.html")
+        )
