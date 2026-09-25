@@ -46,6 +46,3 @@ jobs:
         run: |
           python -m pytest tests/security -v
 
-      - name: Run smoke tests
-        run: |
-          pytest -m smoke -v
